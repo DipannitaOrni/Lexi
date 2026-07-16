@@ -44,12 +44,12 @@ Every output is also read aloud via browser-native text-to-speech, with adjustab
 ## Architecture
 
 ```
-┌─────────────┐     ┌──────────────────────────────────────┐     ┌─────────────┐
-│  Frontend    │────▶│           Backend (Gemma 4)            │────▶│  Frontend    │
-│  Upload/UI   │     │                                        │     │  Display     │
-└─────────────┘     │  1. Rewrite  (mode-specific prompt)   │     └─────────────┘
-                     │  2. Self-check (original vs. rewrite) │
-                     │  3. Q&A (grounded in original doc)     │
+┌─────────────┐      ┌──────────────────────────────────────┐      ┌─────────────┐
+│  Frontend   │────▶|           Backend (Gemma 4)           │────▶│  Frontend   │
+│  Upload/UI  │      │                                      │      │  Display    │
+└─────────────┘      │  1. Rewrite  (mode-specific prompt)  │      └─────────────┘
+                     │  2. Self-check (original vs. rewrite)│
+                     │  3. Q&A (grounded in original doc)   │
                      └──────────────────────────────────────┘
 ```
 
