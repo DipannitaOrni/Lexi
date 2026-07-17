@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     # Gemma 4 API
     gemma_api_key: str = "AQ.Ab8RN6KMOjjgydDW3t8ZX3skCOzqL2sbDEJlGO2xbwfiwzaeeQ"
     gemma_api_base_url: str = "https://generativelanguage.googleapis.com/v1beta"
-    gemma_model_name: str = "gemma-4"
+    gemma_model_name: str = "gemma-4-26b-a4b-it"
     gemma_timeout_seconds: float = 30.0
     gemma_max_retries: int = 3
 
