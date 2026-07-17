@@ -13,17 +13,23 @@ import Landing from './components/Landing'
 import ReadingControls from './components/ReadingControls'
 import ProgressSteps from './components/ProgressSteps'
 
+const API_BASE = 'http://localhost:8000'
+
 const FONT_SIZE_PX = { small: '13.5px', medium: '16px', large: '19px' }
 const LINE_HEIGHT = { normal: '1.85', relaxed: '2.3' }
 
 function App() {
   const [originalText, setOriginalText] = useState('')
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [documentId, setDocumentId] = useState(null)
+
   const [simplifiedText, setSimplifiedText] = useState('')
   const [mode, setMode] = useState('dyslexia')
   const [confidenceFlags, setConfidenceFlags] = useState([])
   const [keyPoints, setKeyPoints] = useState([])
   const [flashcards, setFlashcards] = useState([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [chatHistory, setChatHistory] = useState([])
   const [view, setView] = useState('landing')
 
@@ -31,24 +37,91 @@ function App() {
   const [lineSpacing, setLineSpacing] = useState('normal')
   const [darkMode, setDarkMode] = useState(false)
 
-  const handleSimplify = () => {
-    if (!originalText.trim()) return
+  const handleTextChange = (text) => {
+    setOriginalText(text)
+    setSelectedFile(null)
+    setDocumentId(null)
+    setSimplifiedText('')
+  }
+
+  const handleFileChange = (file) => {
+    setSelectedFile(file)
+    setOriginalText('')
+    setDocumentId(null)
+    setSimplifiedText('')
+  }
+
+  const uploadContent = async () => {
+    if (selectedFile) {
+      const formData = new FormData()
+      formData.append('file', selectedFile)
+      const res = await fetch(`${API_BASE}/upload`, { method: 'POST', body: formData })
+      if (!res.ok) throw new Error('upload_failed')
+      const data = await res.json()
+      setOriginalText(data.extracted_text_preview)
+      return data.document_id
+    } else {
+      const res = await fetch(`${API_BASE}/upload/text`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pasted_text: originalText }),
+      })
+      if (!res.ok) throw new Error('upload_failed')
+      const data = await res.json()
+      return data.document_id
+    }
+  }
+
+  const handleSimplify = async () => {
+    if (!originalText.trim() && !selectedFile) return
     setLoading(true)
-    setTimeout(() => {
-      setSimplifiedText('This is where the simplified version will appear once the backend is connected. Lexi rewrites your text to match your chosen reading mode — shorter sentences, clearer words, and a calmer structure.')
-      setConfidenceFlags(['This sentence was shortened significantly — please check the meaning is preserved.'])
-      setKeyPoints([
-        'This is the first key takeaway Lexi found in your document.',
-        'The second most important point appears here.',
-        'A third essential idea, pulled out for quick scanning.',
-      ])
-      setFlashcards([
-        { term: 'Example Term', definition: 'A clear, simple definition of the term will appear here once connected to the backend.' },
-        { term: 'Second Concept', definition: 'Another concept broken down into an easy-to-remember card.' },
-        { term: 'Third Idea', definition: 'One idea per card keeps things calm and focused.' },
-      ])
+    setError(null)
+    try {
+      let docId = documentId
+      if (!docId) {
+        docId = await uploadContent()
+        setDocumentId(docId)
+      }
+      const res = await fetch(`${API_BASE}/process`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ document_id: docId, mode }),
+      })
+      if (!res.ok) throw new Error('process_failed')
+      const data = await res.json()
+      setSimplifiedText(data.rewritten_text)
+      if (data.verification) {
+        setConfidenceFlags(data.verification.warnings.map((w) => w.description))
+      } else if (data.verification_error) {
+        setConfidenceFlags(['Verification was unavailable for this result — review carefully.'])
+      } else {
+        setConfidenceFlags([])
+      }
+    } catch (err) {
+      console.error('Simplify failed:', err)
+      setError('Something went wrong simplifying your text. Please try again.')
+    } finally {
       setLoading(false)
-    }, 1500)
+    }
+  }
+
+  const handleAsk = async (question) => {
+    if (!documentId) return "Simplify a document first so I have something to answer questions about."
+    try {
+      const res = await fetch(`${API_BASE}/ask`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ document_id: documentId, question }),
+      })
+      const data = await res.json()
+      if (!data.found_in_document) {
+        return "I couldn't find that in the document. Try rephrasing your question."
+      }
+      return data.answer
+    } catch (err) {
+      console.error('Ask failed:', err)
+      return "Something went wrong answering that — please try again."
+    }
   }
 
   const hasResults = simplifiedText || loading
@@ -73,28 +146,36 @@ function App() {
       <div className="grain" aria-hidden="true"></div>
       <div className="tool-blob tb1" aria-hidden="true"></div>
       <div className="tool-blob tb2" aria-hidden="true"></div>
+      <div className="tool-blob tb3" aria-hidden="true"></div>
+      <div className="tool-blob tb4" aria-hidden="true"></div>
       <div className="app">
         <header className="page-intro">
           <h1 className="page-title">Let's simplify your text</h1>
           <p className="page-sub">Add your document, pick a reading mode, and Lexi does the rest.</p>
         </header>
 
-        <ProgressSteps hasText={!!originalText.trim()} hasResults={!!simplifiedText} />
+        <ProgressSteps hasText={!!originalText.trim() || !!selectedFile} hasResults={!!simplifiedText} />
         <ReadingControls
           fontSize={fontSize} setFontSize={setFontSize}
           lineSpacing={lineSpacing} setLineSpacing={setLineSpacing}
           darkMode={darkMode} setDarkMode={setDarkMode}
         />
 
-        <UploadArea setOriginalText={setOriginalText} originalText={originalText} />
+        <UploadArea
+          originalText={originalText}
+          onTextChange={handleTextChange}
+          onFileChange={handleFileChange}
+          selectedFileName={selectedFile?.name}
+        />
         <ModeSelector mode={mode} setMode={setMode} />
 
         <div className="simplify-wrapper">
-          <button className="simplify-btn" onClick={handleSimplify} disabled={loading || !originalText.trim()}>
+          <button className="simplify-btn" onClick={handleSimplify} disabled={loading || (!originalText.trim() && !selectedFile)}>
             <Sparkles size={18} />
             {loading ? 'Simplifying your text...' : 'Simplify with Lexi'}
           </button>
-          {!originalText.trim() && <p className="hint">Add your text above to get started</p>}
+          {!originalText.trim() && !selectedFile && <p className="hint">Add your text above to get started</p>}
+          {error && <p className="hint" style={{ color: '#d97706' }}>{error}</p>}
         </div>
 
         {hasResults && (
@@ -105,7 +186,7 @@ function App() {
             <Flashcards cards={flashcards} loading={loading} />
             <ConfidencePanel flags={confidenceFlags} />
             <AudioControls text={simplifiedText} />
-            <ChatBox originalText={originalText} chatHistory={chatHistory} setChatHistory={setChatHistory} />
+            <ChatBox chatHistory={chatHistory} setChatHistory={setChatHistory} onAsk={handleAsk} />
           </div>
         )}
       </div>

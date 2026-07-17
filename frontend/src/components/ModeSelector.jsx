@@ -3,8 +3,8 @@ import { Type, Target, Volume2, Globe, Check } from 'lucide-react'
 const MODES = [
   { id: 'dyslexia', label: 'Dyslexia', Icon: Type, desc: 'Shorter sentences, simpler words' },
   { id: 'focus', label: 'Focus / ADHD', Icon: Target, desc: 'Chunked sections, key terms bold' },
-  { id: 'screenreader', label: 'Screen Reader', Icon: Volume2, desc: 'Clean structure, logical order' },
-  { id: 'nonnative', label: 'Simple English', Icon: Globe, desc: 'Plain language, no jargon' },
+  { id: 'screen_reader', label: 'Screen Reader', Icon: Volume2, desc: 'Clean structure, logical order' },
+  { id: 'non_native', label: 'Simple English', Icon: Globe, desc: 'Plain language, no jargon' },
 ]
 
 function ModeSelector({ mode, setMode }) {

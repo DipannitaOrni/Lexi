@@ -1,17 +1,19 @@
 import { useState } from 'react'
 import { MessageCircle, Lightbulb, Send } from 'lucide-react'
 
-function ChatBox({ originalText, chatHistory, setChatHistory }) {
+function ChatBox({ chatHistory, setChatHistory, onAsk }) {
   const [question, setQuestion] = useState('')
+  const [asking, setAsking] = useState(false)
 
-  const askQuestion = () => {
-    if (!question.trim()) return
-    setChatHistory([
-      ...chatHistory,
-      { role: 'user', text: question },
-      { role: 'bot', text: 'Lexi will answer questions about your document once the backend is connected.' },
-    ])
+  const askQuestion = async () => {
+    if (!question.trim() || asking) return
+    const q = question
+    setChatHistory((prev) => [...prev, { role: 'user', text: q }])
     setQuestion('')
+    setAsking(true)
+    const answer = await onAsk(q)
+    setChatHistory((prev) => [...prev, { role: 'bot', text: answer }])
+    setAsking(false)
   }
 
   return (
@@ -39,6 +41,12 @@ function ChatBox({ originalText, chatHistory, setChatHistory }) {
             <div className={`bubble ${msg.role}`}>{msg.text}</div>
           </div>
         ))}
+        {asking && (
+          <div className="bubble-wrap bot">
+            <div className="bubble-label">Lexi</div>
+            <div className="bubble bot">Thinking...</div>
+          </div>
+        )}
       </div>
       <div className="chat-input-row">
         <input
@@ -49,7 +57,7 @@ function ChatBox({ originalText, chatHistory, setChatHistory }) {
           placeholder="Ask anything about this document..."
           aria-label="Ask a question"
         />
-        <button className="send-btn" onClick={askQuestion}>Send <Send size={15} /></button>
+        <button className="send-btn" onClick={askQuestion} disabled={asking}>Send <Send size={15} /></button>
       </div>
     </div>
   )

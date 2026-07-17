@@ -1,11 +1,10 @@
-import { FileText, UploadCloud } from 'lucide-react'
+import { FileText, UploadCloud, File as FileIcon } from 'lucide-react'
 
-function UploadArea({ setOriginalText, originalText }) {
-  const handleFileUpload = async (e) => {
+function UploadArea({ originalText, onTextChange, onFileChange, selectedFileName }) {
+  const handleFileUpload = (e) => {
     const file = e.target.files[0]
     if (!file) return
-    const text = await file.text()
-    setOriginalText(text)
+    onFileChange(file)
   }
 
   const wordCount = originalText.trim() ? originalText.trim().split(/\s+/).length : 0
@@ -21,9 +20,19 @@ function UploadArea({ setOriginalText, originalText }) {
       </div>
       <div className="upload-body">
         <label className="dropzone" htmlFor="file-upload">
-          <UploadCloud size={28} />
-          <div className="drop-title">Click to upload a file</div>
-          <div className="drop-sub">TXT · PDF · DOCX</div>
+          {selectedFileName ? (
+            <>
+              <FileIcon size={28} />
+              <div className="drop-title">{selectedFileName}</div>
+              <div className="drop-sub">Click to change file</div>
+            </>
+          ) : (
+            <>
+              <UploadCloud size={28} />
+              <div className="drop-title">Click to upload a file</div>
+              <div className="drop-sub">TXT · PDF · DOCX</div>
+            </>
+          )}
           <input id="file-upload" type="file" accept=".txt,.pdf,.docx" onChange={handleFileUpload} style={{ display: 'none' }} />
         </label>
         <div className="or-divider">or</div>
@@ -32,7 +41,7 @@ function UploadArea({ setOriginalText, originalText }) {
           <textarea
             id="paste-text"
             placeholder="Paste any article, assignment, government form, or document here..."
-            onChange={(e) => setOriginalText(e.target.value)}
+            onChange={(e) => onTextChange(e.target.value)}
             value={originalText}
             rows={6}
           />
