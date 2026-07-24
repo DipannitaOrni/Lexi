@@ -7,7 +7,6 @@ Provides the same four capabilities used across the pipeline, with the
 exact same function signatures as the previous OpenAI-based client:
 - call_llm()         — chat completion (Stages 1/2/3, flashcards, key points)
 - get_embedding()     — text embeddings (Stage 3 semantic retrieval)
-- text_to_speech()    — audio synthesis (AudioControls / read-aloud feature)
 - transcribe_audio()  — speech-to-text (voice question input in ChatBox)
 
 Backend: cloud, API-key based, no local server/GPU required — get a key at
@@ -211,56 +210,6 @@ def _wav_to_mp3(wav_bytes: bytes) -> bytes:
         return result.stdout
     except FileNotFoundError as exc:
         raise LLMAPIError("ffmpeg is not installed. Install it (e.g. `apt-get install ffmpeg`) to enable /tts.") from exc
-
-
-async def text_to_speech(text: str, voice: Optional[str] = None, speed: float = 1.0) -> bytes:
-    """
-    Synthesizes `text` into MP3 audio bytes.
-
-    LIMITATION: Gemma has no text-to-speech / audio-generation capability of
-    any kind — it is a listen-and-write model, not a speak model. This
-    function therefore calls Gemini's native-audio TTS model on the same
-    API/key rather than Gemma itself. See migration summary. `speed` has no
-    direct API parameter here; it's expressed to the model as an instruction.
-    """
-    settings = get_settings()
-    api_key = _require_key(settings)
-    url = f"{settings.gemma_api_base}/models/{settings.gemma_tts_model}:generateContent"
-
-    speed = max(0.5, min(2.0, speed))
-    pace_hint = "" if 0.9 <= speed <= 1.1 else (" Speak noticeably faster than normal." if speed > 1.1 else " Speak noticeably slower than normal.")
-
-    try:
-        async with httpx.AsyncClient(timeout=settings.llm_timeout_seconds) as client:
-            response = await client.post(
-                url,
-                headers=_headers(api_key),
-                json={
-                    "contents": [{"parts": [{"text": f"Say clearly:{pace_hint} {text[:4000]}"}]}],
-                    "generationConfig": {
-                        "responseModalities": ["AUDIO"],
-                        "speechConfig": {
-                            "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice or settings.gemma_tts_voice}}
-                        },
-                    },
-                },
-            )
-    except httpx.TimeoutException:
-        raise LLMTimeoutError("Gemma TTS timeout")
-
-    if response.status_code >= 400:
-        raise LLMAPIError(f"Gemma TTS error: {response.status_code} {response.text[:200]}", response.status_code)
-
-    data = response.json()
-    try:
-        inline = data["candidates"][0]["content"]["parts"][0]["inlineData"]
-        pcm_bytes = base64.b64decode(inline["data"])
-    except (KeyError, IndexError) as exc:
-        raise LLMAPIError("Gemma TTS response contained no audio") from exc
-
-    wav_bytes = await asyncio.to_thread(_pcm_to_wav, pcm_bytes)
-    mp3_bytes = await asyncio.to_thread(_wav_to_mp3, wav_bytes)
-    return mp3_bytes
 
 
 async def transcribe_audio(file_bytes: bytes, filename: str) -> str:
