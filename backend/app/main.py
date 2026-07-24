@@ -51,8 +51,8 @@ rate_limiter = RateLimiter(max_requests_per_minute=settings.rate_limit_per_minut
 
 _RATE_LIMITED_PATHS = {
     "/upload", "/upload/text", "/process", "/rewrite", "/rewrite/stream",
-    "/verify", "/ask", "/flashcards", "/key-points", "/tts", "/tts/timed",
-    "/transcribe", "/export", "/glossary", "/visualize",
+    "/verify", "/ask", "/flashcards", "/key-points", "/transcribe", 
+    "/export", "/glossary", "/visualize",
 }
 
 
