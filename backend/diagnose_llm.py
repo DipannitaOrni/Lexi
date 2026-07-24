@@ -12,7 +12,6 @@ code and response body from Google instead of just "unreachable".
 import asyncio
 import os
 import sys
-
 import httpx
 from dotenv import load_dotenv
 
