@@ -2,7 +2,7 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-ExportFormat = Literal["txt", "pdf", "audio"]
+ExportFormat = Literal["txt", "pdf"]
 
 
 class ExportRequest(BaseModel):
