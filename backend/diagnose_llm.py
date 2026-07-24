@@ -63,7 +63,6 @@ async def main():
             print("     https://aistudio.google.com/apikey and re-testing.")
         elif resp.status_code == 404:
             print(f"\n❌ Model '{MODEL}' not found at this API base — check spelling")
-            print("   or try 'gemini-3.5-flash' to isolate model-name vs auth issues.")
         elif resp.status_code == 429:
             print("\n❌ Rate limited / quota exceeded.")
         elif resp.status_code >= 500:
