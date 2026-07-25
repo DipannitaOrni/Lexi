@@ -6,6 +6,11 @@
 
 **Every document assumes one kind of reader. Lexi rewrites it for the rest of us and checks its own work before it hands anything back.**
 
+<p align="center">
+   <img width="1600" height="765" alt="WhatsApp Image 2026-07-25 at 9 30 46 PM" src="https://github.com/user-attachments/assets/35d8870d-d5ed-432b-b9de-4002be419e1e" />
+</p>
+
+
 Built on  
 ![Gemma 4](https://img.shields.io/badge/Gemma_4-8E75B2?logo=google&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white) ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black) ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white) ![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
 
@@ -14,10 +19,6 @@ Built on
 [The problem](#the-problem) · [The approach](#the-approach) · [What makes it different](#what-makes-it-different) · [How it works](#how-it-works) · [Architecture](#architecture) · [The seven modes](#the-seven-modes) · [Real-world impact](#real-world-impact) · [Why Gemma](#why-gemma-is-the-whole-engine) · [Tech stack](#tech-stack) · [Run it](#run-it-locally)
 
 <br/>
-
-<p align="center">
-   <img width="1600" height="765" alt="WhatsApp Image 2026-07-25 at 9 30 46 PM" src="https://github.com/user-attachments/assets/35d8870d-d5ed-432b-b9de-4002be419e1e" />
-</p>
 
 
 </div>
