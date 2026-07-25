@@ -63,7 +63,56 @@ The result is a reading tool that is willing to look *less* impressive — flagg
 The same paragraph comes out meaningfully different depending on who is reading it. This is the core thesis, and it is enforced by seven distinct rule sets, not seven tone presets.
 
 <div align="center">
-  <img src="docs/screenshots/modes.png" alt="The seven reading modes" width="760" />
+
+<table>
+<tr>
+<td align="center" width="25%">
+  <img width="527" height="101" alt="Screenshot 2026-07-25 214411" src="https://github.com/user-attachments/assets/d2a214ee-afaf-49ab-84ee-0880389d307b" />
+
+  <br/>
+  <strong>01 · Dyslexia-Friendly</strong>
+</td>
+
+<td align="center" width="25%">
+  <img src="YOUR_FOCUS_IMAGE_URL" width="210" alt="Focus Mode" />
+  <br/>
+  <strong>02 · Focus Mode</strong>
+</td>
+
+<td align="center" width="25%">
+  <img src="YOUR_ADHD_IMAGE_URL" width="210" alt="ADHD-Friendly Mode" />
+  <br/>
+  <strong>03 · ADHD-Friendly</strong>
+</td>
+
+<td align="center" width="25%">
+  <img src="YOUR_SCREEN_READER_IMAGE_URL" width="210" alt="Screen Reader Mode" />
+  <br/>
+  <strong>04 · Screen Reader</strong>
+</td>
+</tr>
+
+<tr>
+<td align="center" width="33%">
+  <img src="YOUR_NON_NATIVE_IMAGE_URL" width="250" alt="Non-Native English Mode" />
+  <br/>
+  <strong>05 · Non-Native English</strong>
+</td>
+
+<td align="center" width="33%">
+  <img src="YOUR_CIVIC_IMAGE_URL" width="250" alt="Civic and Forms Mode" />
+  <br/>
+  <strong>06 · Civic / Forms</strong>
+</td>
+
+<td align="center" width="33%">
+  <img src="YOUR_DYSCALCULIA_IMAGE_URL" width="250" alt="Dyscalculia Mode" />
+  <br/>
+  <strong>07 · Dyscalculia</strong>
+</td>
+</tr>
+</table>
+
 </div>
 
 ### 2. It checks its own work
