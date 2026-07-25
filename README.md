@@ -62,14 +62,6 @@ The result is a reading tool that is willing to look *less* impressive — flagg
 ### 1. Seven genuinely different rewrites — not one, relabelled
 The same paragraph comes out meaningfully different depending on who is reading it. This is the core thesis, and it is enforced by seven distinct rule sets, not seven tone presets.
 
-
-<p align="center">
-  <a href="YOUR_GITHUB_IMAGE_URL">
-   <img width="540" height="735" alt="Screenshot 2026-07-25 215935" src="https://github.com/user-attachments/assets/ee72fe9c-3d64-4854-b0a9-1cf7af578520" />
-
-  </a>
-</p>
-
 <p align="center">
   <em>
     Lexi adapts the same document to different reading needs — from
