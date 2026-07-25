@@ -94,7 +94,8 @@ After every rewrite, a **second Gemma pass** compares the new version against th
 For a birthday card, that is overkill. For a medical dosage, a legal notice, or a form that decides whether someone receives support, **a confidently wrong simplification is worse than none at all.** So Lexi tells you exactly where to look twice.
 
 <div align="center">
-  <img src="docs/screenshots/verification.png" alt="Self-verification flags showing where meaning may have drifted" width="760" />
+  <img width="1355" height="805" alt="WhatsApp Image 2026-07-25 at 9 41 35 PM" src="https://github.com/user-attachments/assets/e45b064f-52ba-4e06-a0ad-75e2bdd28388" />
+
   <br/><em>Lexi shows exactly where it wasn't certain — original and rewritten wording side by side.</em>
 </div>
 
