@@ -6,7 +6,8 @@
 
 **Every document assumes one kind of reader. Lexi rewrites it for the rest of us and checks its own work before it hands anything back.**
 
-Built on **Gemma 4** · FastAPI · React
+Built on  
+![Gemma 4](https://img.shields.io/badge/Gemma_4-8E75B2?logo=google&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white) ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black) ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white) ![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
 
 **[▶ Watch the demo](YOUR_VIDEO_LINK_HERE)**
 
