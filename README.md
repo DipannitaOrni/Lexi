@@ -7,7 +7,8 @@
 **Every document assumes one kind of reader. Lexi rewrites it for the rest of us and checks its own work before it hands anything back.**
 
 <p align="center">
-   <img width="1600" height="765" alt="WhatsApp Image 2026-07-25 at 9 30 46 PM" src="https://github.com/user-attachments/assets/35d8870d-d5ed-432b-b9de-4002be419e1e" />
+  <img width="1548" height="791" alt="WhatsApp Image 2026-07-25 at 11 33 48 PM" src="https://github.com/user-attachments/assets/b96effd3-1f1c-47c8-9551-58c986a98ec7" />
+
 </p>
 
 
