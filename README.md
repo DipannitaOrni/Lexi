@@ -83,7 +83,7 @@ The same paragraph comes out meaningfully different depending on who is reading 
   <tr>
     <td align="center"><strong>05</strong><br>Civic / Forms</td>
     <td align="center"><strong>06</strong><br>Dyscalculia</td>
-    <td align="center"><strong>07</strong><br>Low Vision</td>
+    <td align="center"><strong>07</strong><br>ADHD-Friendly</td>
     <td></td>
   </tr>
 </table>
@@ -100,7 +100,7 @@ For a birthday card, that is overkill. For a medical dosage, a legal notice, or 
   <br/><em>Lexi shows exactly where it wasn't certain — original and rewritten wording side by side.</em>
 </div>
 
-### 3. Answers grounded in *your* document — or an honest "I don't know"
+### 3. Answers grounded in *your* document - or an honest "I don't know"
 Ask a question and the answer is drawn from your document, with the supporting line quoted back. If the answer isn't in the text, Lexi says so, rather than inventing one.
 
 ---
@@ -130,13 +130,13 @@ flowchart LR
     style U fill:#fff,stroke:#9C9086,color:#221C18
 ```
 
-Everything downstream — grounded Q&A, key points, glossary, flashcards, and diagram generation — reuses the same extracted, chunked document.
+Everything downstream - grounded Q&A, key points, glossary, flashcards and diagram generation - reuses the same extracted, chunked document.
 
 ---
 
 ## Architecture
 
-A clean split: a **stateless FastAPI reasoning core** and a **provider-isolated React client**. Every AI capability is one HTTP call away, and the frontend never knows or cares which model sits behind the API.
+A clean split: a **stateless FastAPI reasoning core** and a **provider-isolated React client**. Every AI capability is one HTTP call away and the frontend never knows or cares which model sits behind the API.
 
 ```mermaid
 flowchart TB
@@ -157,7 +157,7 @@ flowchart TB
         Routes --- Client --- Store --- Prompts
     end
 
-    Gemma["<b>Gemma 4</b><br/>gemma-4-31b-it — all reasoning &amp; generation<br/>gemma-4-12b-it — audio-in (dictation)"]
+    Gemma["<b>Gemma 4</b><br/>gemma-4-31b-it - all reasoning &amp; generation<br/>gemma-4-12b-it - audio-in (dictation)"]
 
     API -->|JSON over HTTP| Routes
     Client --> Gemma
@@ -171,10 +171,10 @@ flowchart TB
 
 **Engineering decisions worth calling out:**
 
-- **One choke-point for the model.** Every Gemma call flows through `gemma_client.py`, which owns retries, timeouts, and structured error codes. Nothing else in the codebase talks to the model directly — so behaviour is consistent and testable across all ten AI features.
+- **One choke-point for the model.** Every Gemma call flows through `gemma_client.py`, which owns retries, timeouts and structured error codes. Nothing else in the codebase talks to the model directly - so behaviour is consistent and testable across all ten AI features.
 - **Prompts defined once.** Mode rules live in `prompts/rewrite_prompts.py`; the frontend's mode list is served from `/modes`, derived from those same keys. Frontend and backend cannot drift out of sync.
 - **The frontend is provider-agnostic by construction.** `lib/api.js` is the only file aware a backend exists. Point `VITE_API_BASE` elsewhere and nothing else moves.
-- **Long documents are chunked to a token budget**, so each piece is rewritten with care rather than a whole document being loosely summarised — the difference between a rewrite and a lossy summary.
+- **Long documents are chunked to a token budget**, so each piece is rewritten with care rather than a whole document being loosely summarised - the difference between a rewrite and a lossy summary.
 
 ---
 
@@ -192,7 +192,7 @@ Each mode is a genuinely different transformation, not a tone setting.
 | 06 | **Civic / Forms** | Requirements, deadlines, fees, and steps pulled out of bureaucratic prose. |
 | 07 | **Dyscalculia** | Numbers, tables, and percentages explained in plain language. |
 
-On top of the mode sits a **1–5 simplification level** — *which barrier* and *how far to go* are separate questions, so they get separate controls.
+On top of the mode sits a **1–5 simplification level** - *which barrier* and *how far to go* are separate questions, so they get separate controls.
 
 ---
 
@@ -202,9 +202,9 @@ Once a document is loaded, every feature works from that same source:
 
 - **Adaptive rewrite** with before/after comparison and readability deltas (grade level, words-per-sentence, sentence count).
 - **Self-verification** with a confidence score and flagged passages.
-- **Grounded Q&A** — ask in English or Bangla, get answers from the document with the supporting excerpt.
+- **Grounded Q&A** - ask in English or Bangla, get answers from the document with the supporting excerpt.
 - **Key points**, **glossary**, and **flashcards** generated on request.
-- **Diagram generation** — flowcharts and charts when the content has structure worth drawing.
+- **Diagram generation** - flowcharts and charts when the content has structure worth drawing.
 - **Read aloud** with the browser's speech engine, and **dictation** to speak text in.
 - **Export** to a branded PDF (with full Bangla support) or plain text.
 
