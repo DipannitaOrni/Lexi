@@ -62,58 +62,98 @@ The result is a reading tool that is willing to look *less* impressive — flagg
 ### 1. Seven genuinely different rewrites — not one, relabelled
 The same paragraph comes out meaningfully different depending on who is reading it. This is the core thesis, and it is enforced by seven distinct rule sets, not seven tone presets.
 
-<div align="center">
+<h3>1. Seven genuinely different rewrites — not one, relabelled</h3>
+
+<p>
+The same paragraph comes out meaningfully different depending on who is reading it.
+This is the core thesis, and it is enforced by seven distinct rule sets, not seven tone presets.
+</p>
+
+<h3 align="center">The seven reading modes</h3>
 
 <table>
 <tr>
-<td align="center" width="25%">
-  <img width="527" height="101" alt="Screenshot 2026-07-25 214411" src="https://github.com/user-attachments/assets/d2a214ee-afaf-49ab-84ee-0880389d307b" />
 
-  <br/>
+<td align="center" valign="top" width="25%">
+  <a href="YOUR_DYSLEXIA_URL">
+    <img width="527" height="81" alt="Screenshot 2026-07-25 214411" src="https://github.com/user-attachments/assets/e525fc49-cc3d-4825-8a5b-0e98169da4b9" />
+
+  </a>
+  <br><br>
   <strong>01 · Dyslexia-Friendly</strong>
+  <br>
+  <sub>Short sentences · simple words · clear spacing</sub>
 </td>
 
-<td align="center" width="25%">
-  <img src="YOUR_FOCUS_IMAGE_URL" width="210" alt="Focus Mode" />
-  <br/>
+<td align="center" valign="top" width="25%">
+  <a href="YOUR_FOCUS_URL">
+    <img src="YOUR_FOCUS_URL" width="220" alt="Focus Mode">
+  </a>
+  <br><br>
   <strong>02 · Focus Mode</strong>
+  <br>
+  <sub>Less clutter · key information first</sub>
 </td>
 
-<td align="center" width="25%">
-  <img src="YOUR_ADHD_IMAGE_URL" width="210" alt="ADHD-Friendly Mode" />
-  <br/>
+<td align="center" valign="top" width="25%">
+  <a href="YOUR_ADHD_URL">
+    <img src="YOUR_ADHD_URL" width="220" alt="ADHD-Friendly Mode">
+  </a>
+  <br><br>
   <strong>03 · ADHD-Friendly</strong>
+  <br>
+  <sub>Scannable structure · concise chunks</sub>
 </td>
 
-<td align="center" width="25%">
-  <img src="YOUR_SCREEN_READER_IMAGE_URL" width="210" alt="Screen Reader Mode" />
-  <br/>
+<td align="center" valign="top" width="25%">
+  <a href="YOUR_SCREEN_READER_URL">
+    <img src="YOUR_SCREEN_READER_URL" width="220" alt="Screen Reader Mode">
+  </a>
+  <br><br>
   <strong>04 · Screen Reader</strong>
+  <br>
+  <sub>Linear flow · explicit structure</sub>
 </td>
+
 </tr>
 
 <tr>
-<td align="center" width="33%">
-  <img src="YOUR_NON_NATIVE_IMAGE_URL" width="250" alt="Non-Native English Mode" />
-  <br/>
+
+<td align="center" valign="top" width="25%">
+  <a href="YOUR_NON_NATIVE_URL">
+    <img src="YOUR_NON_NATIVE_URL" width="220" alt="Non-Native English Mode">
+  </a>
+  <br><br>
   <strong>05 · Non-Native English</strong>
+  <br>
+  <sub>Plain English · contextual explanations</sub>
 </td>
 
-<td align="center" width="33%">
-  <img src="YOUR_CIVIC_IMAGE_URL" width="250" alt="Civic and Forms Mode" />
-  <br/>
+<td align="center" valign="top" width="25%">
+  <a href="YOUR_CIVIC_URL">
+    <img src="YOUR_CIVIC_URL" width="220" alt="Civic and Forms Mode">
+  </a>
+  <br><br>
   <strong>06 · Civic / Forms</strong>
+  <br>
+  <sub>Action-oriented · instructions clarified</sub>
 </td>
 
-<td align="center" width="33%">
-  <img src="YOUR_DYSCALCULIA_IMAGE_URL" width="250" alt="Dyscalculia Mode" />
-  <br/>
+<td align="center" valign="top" width="25%">
+  <a href="YOUR_DYSCALCULIA_URL">
+    <img src="YOUR_DYSCALCULIA_URL" width="220" alt="Dyscalculia Mode">
+  </a>
+  <br><br>
   <strong>07 · Dyscalculia</strong>
+  <br>
+  <sub>Numbers clarified · calculations contextualised</sub>
 </td>
+
+<td width="25%"></td>
+
 </tr>
 </table>
 
-</div>
 
 ### 2. It checks its own work
 After every rewrite, a **second Gemma pass** compares the new version against the original and flags any passage where the meaning may have drifted — showing both excerpts side by side, with a confidence score.
