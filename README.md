@@ -65,11 +65,8 @@ The same paragraph comes out meaningfully different depending on who is reading 
 
 <p align="center">
   <a href="YOUR_GITHUB_IMAGE_URL">
-    <img
-      src="YOUR_GITHUB_IMAGE_URL"
-      width="900"
-      alt="Lexi's seven adaptive reading modes"
-    />
+   <img width="540" height="735" alt="Screenshot 2026-07-25 215935" src="https://github.com/user-attachments/assets/ee72fe9c-3d64-4854-b0a9-1cf7af578520" />
+
   </a>
 </p>
 
