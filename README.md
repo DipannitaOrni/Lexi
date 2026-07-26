@@ -30,7 +30,7 @@ Built on
 
 Almost everything written down assumes the same reader: someone who can hold a long sentence in working memory, decode unfamiliar words on the fly, and follow structure that exists only visually on the page.
 
-A very large number of people do not read that way — and the cost of ignoring them is not abstract.
+A very large number of people do not read that way and the cost of ignoring them is not abstract.
 
 - A student with **dyslexia** facing forty pages of assigned reading, where every long sentence destabilises comprehension.
 - Someone with **ADHD** who has reopened the same paragraph six times because it is an unbroken wall of text.
