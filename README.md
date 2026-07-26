@@ -185,7 +185,7 @@ Ask a question and the answer is drawn from your document, with the supporting l
 
 <br/>
 
-Lexi runs a document through **three distinct passes** — read, rewrite, verify — rather than a single "make it simpler" call.
+Lexi runs a document through **three distinct passes** read, rewrite, verify rather than a single "make it simpler" call.
 
 ```mermaid
 flowchart LR
@@ -201,7 +201,7 @@ flowchart LR
     style U fill:#fff,stroke:#9C9086,color:#221C18
 ```
 
-Everything downstream — grounded Q&A, key points, glossary, flashcards, and diagram generation — reuses the same extracted, chunked document.
+Everything downstream - grounded Q&A, key points, glossary, flashcards and diagram generation reuses the same extracted, chunked document.
 
 ---
 
@@ -244,11 +244,11 @@ flowchart TB
 <summary><strong>⚙️ Engineering decisions worth calling out</strong> (click to expand)</summary>
 <br/>
 
-- **One choke-point for the model.** Every Gemma call flows through `gemma_client.py`, which owns retries, timeouts, and structured error codes. Nothing else in the codebase talks to the model directly — so behaviour is consistent and testable across every AI feature.
+- **One choke-point for the model.** Every Gemma call flows through `gemma_client.py`, which owns retries, timeouts, and structured error codes. Nothing else in the codebase talks to the model directly so behaviour is consistent and testable across every AI feature.
 - **Prompts defined once.** Mode rules live in `prompts/rewrite_prompts.py`; the frontend's mode list is served from `/modes`, derived from those same keys. Frontend and backend cannot drift out of sync.
 - **The frontend is provider-agnostic by construction.** `lib/api.js` is the only file aware a backend exists. Point `VITE_API_BASE` elsewhere and nothing else moves.
-- **Long documents are chunked to a token budget**, so each piece is rewritten with care rather than a whole document being loosely summarised — the difference between a rewrite and a lossy summary.
-- **Verification always runs per-chunk**, never against the whole document at once — this keeps each audit call small, fast, and easy to reason about when something is flagged.
+- **Long documents are chunked to a token budget**, so each piece is rewritten with care rather than a whole document being loosely summarised the difference between a rewrite and a lossy summary.
+- **Verification always runs per-chunk**, never against the whole document at once this keeps each audit call small, fast and easy to reason about when something is flagged.
 
 </details>
 
@@ -256,20 +256,25 @@ flowchart TB
 
 ## The seven modes
 
-Each mode is a genuinely different transformation, not a tone setting.
+Each mode applies a distinct transformation policy to the same source document.
 
-| # | Mode | What it changes |
-|:-:|------|-----------------|
-| 01 | 🔤 **Dyslexia-Friendly** | Short sentences, common words, one idea per line, generous spacing. |
-| 02 | 🎯 **Focus Mode** | Key points surfaced first, bulleted structure, essentials in bold. |
-| 03 | 🔊 **Screen Reader** | Real heading structure and speech-friendly punctuation for listening, not looking. |
-| 04 | 🌍 **Non-Native English** | Plain vocabulary with idiom and jargon clarified inline. |
-| 05 | 📋 **Civic / Forms** | Requirements, deadlines, fees, and steps pulled out of bureaucratic prose. |
-| 06 | 🔢 **Dyscalculia** | Numbers, tables, and percentages explained in plain language. |
-| 07 | ⚡ **ADHD-Friendly** | Small chunks, the most important action first, one action per line, nothing buried. |
+| # | Mode | Transformation rules |
+|:-:|------|----------------------|
+| 01 | 🔤 **Dyslexia-Friendly** | Short sentences · common words · one idea per line · generous spacing |
+| 02 | 🎯 **Focus Mode** | Key points first · bullets · essential information emphasized |
+| 03 | 🔊 **Screen Reader** | Explicit headings · linear structure · speech-friendly punctuation |
+| 04 | 🌍 **Non-Native English** | Plain vocabulary · idioms clarified · jargon explained inline |
+| 05 | 📋 **Civic / Forms** | Requirements · deadlines · fees · steps extracted from bureaucratic prose |
+| 06 | 🔢 **Dyscalculia** | Numbers · percentages · tables translated into plain-language explanations |
+| 07 | ⚡ **ADHD-Friendly** | Small chunks · action first · one action per line · nothing important buried |
 
-On top of the mode sits a **1–5 simplification level** — *which barrier* and *how far to go* are separate questions, so they get separate controls.
+### Two independent controls
 
+The **reading mode** determines *which barrier to address*.
+
+The **simplification level (1–5)** determines *how aggressively to transform the text*.
+
+These are deliberately separate controls: a user can choose **what kind of accessibility support they need** independently from **how much simplification they want**.
 ---
 
 ## Everything you can do with a document
@@ -292,9 +297,9 @@ Once a document is loaded, every feature works from that same source:
 
 ## Real-world impact
 
-Lexi is built for people, in a place, with a language — not for a demo.
+Lexi is built for people, in a place, with a language not for a demo.
 
-**🇧🇩 It works in বাংলা, end to end.** The interface, the rewriting, and the grounded Q&A all operate in Bangla as well as English. For a reader in Bangladesh facing an English-heavy government form, or a Bangla document written in dense officialese, this is the difference between understanding a document and guessing at it. PDF export embeds Unicode fonts so Bangla survives the round-trip intact a detail most tools quietly get wrong.
+**🇧🇩 It works in বাংলা, end to end.** The interface, the rewriting and the grounded Q&A all operate in Bangla as well as English. For a reader in Bangladesh facing an English-heavy government form or a Bangla document written in dense officialese, this is the difference between understanding a document and guessing at it. PDF export embeds Unicode fonts so Bangla survives the round-trip intact a detail most tools quietly get wrong.
 
 **♿ The interface is itself an accessibility surface**, not a wrapper around one. Adjustable text size, relaxed line spacing, dark mode, full keyboard navigation and screen-reader labelling throughout. Body text is set in **Lexend**, a typeface independently designed to improve reading proficiency.
 
@@ -311,11 +316,11 @@ Nothing in Lexi works by keyword matching or hand-written rules. Every capabilit
 - deciding *which* clause in a legal paragraph is the fragile one,
 - rewriting for a specific cognitive barrier **without losing meaning**,
 - judging whether a rewrite has drifted from its source,
-- answering a question grounded in one specific document — and admitting when the answer isn't there.
+- answering a question grounded in one specific document and admitting when the answer isn't there.
 
-**Every generative call in Lexi runs on Gemma 4.** Rewriting, verification, grounded Q&A, glossary, flashcards, key points, and visualisation — all of it. Dictation uses Gemma's audio-capable variant. Strip Gemma out and there is no fallback; there is nothing.
+**Every generative call in Lexi runs on Gemma 4.** Rewriting, verification, grounded Q&A, glossary, flashcards, key points, and visualisation all of it. Dictation uses Gemma's audio-capable variant. Strip Gemma out and there is no fallback; there is nothing.
 
-> 💡 **One honest note on retrieval.** For grounded Q&A, Lexi ranks document chunks with a hosted embedding model, because Gemma exposes no embedding endpoint. Embeddings are **not generative** — they encode text as vectors so the right passage can be located *before* Gemma answers from it. Every piece of reasoning and every word of output remains Gemma's.
+> 💡 **One honest note on retrieval.** For grounded Q&A, Lexi ranks document chunks with a hosted embedding model, because Gemma exposes no embedding endpoint. Embeddings are **not generative**, they encode text as vectors so the right passage can be located *before* Gemma answers from it. Every piece of reasoning and every word of output remains Gemma's.
 
 ---
 
@@ -324,7 +329,7 @@ Nothing in Lexi works by keyword matching or hand-written rules. Every capabilit
 Every choice below was made for a reason not pulled in by default.
 
 <details open>
-<summary><strong>🐍 Backend - a stateless reasoning core</strong></summary>
+<summary><strong> Backend - a stateless reasoning core</strong></summary>
 <br/>
 
 | Layer | Choice | Why |
@@ -342,7 +347,7 @@ Every choice below was made for a reason not pulled in by default.
 </details>
 
 <details open>
-<summary><strong>⚛️ Frontend — a provider-agnostic client</strong></summary>
+<summary><strong> Frontend — a provider-agnostic client</strong></summary>
 <br/>
 
 | Layer | Choice | Why |
@@ -363,8 +368,8 @@ Every choice below was made for a reason not pulled in by default.
 Being upfront about the edges of the system, rather than papering over them:
 
 - 📊 **Diagram generation is intentionally conservative.** If a document's content doesn't genuinely suit a flowchart or chart, Lexi says so rather than forcing a visualization onto unsuitable text.
-- ✅ **Verification is an audit, not a guarantee.** The confidence score reflects how well Gemma's own comparison pass caught drift — it materially reduces (but does not eliminate) the risk of a silently wrong simplification, which is why both versions are always shown, not just the rewrite.
-- 🔒 **No persistent user accounts.** By design — session-scoped storage is a privacy choice, not a missing feature (see [Real-world impact](#real-world-impact)).
+- ✅ **Verification is an audit, not a guarantee.** The confidence score reflects how well Gemma's own comparison pass caught drift it materially reduces (but does not eliminate) the risk of a silently wrong simplification, which is why both versions are always shown, not just the rewrite.
+- 🔒 **No persistent user accounts.** By design session-scoped storage is a privacy choice, not a missing feature (see [Real-world impact](#real-world-impact)).
 
 ---
 
@@ -447,7 +452,7 @@ npm run dev                      # http://localhost:5173
 <details>
 <summary><strong>Does Lexi change the meaning of my document?</strong></summary>
 <br/>
-Never intentionally, and rarely by accident — every rewrite is checked by a second Gemma pass that compares it against the original and flags anything that may have drifted. You always see both versions, so you never have to just trust the rewrite blindly.
+Never intentionally, and rarely by accident every rewrite is checked by a second Gemma pass that compares it against the original and flags anything that may have drifted. You always see both versions, so you never have to just trust the rewrite blindly.
 </details>
 
 <details>
