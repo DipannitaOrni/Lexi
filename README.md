@@ -207,17 +207,22 @@ Everything downstream - grounded Q&A, key points, glossary, flashcards and diagr
 
 ## Architecture
 
-Lexi separates into three layers: a React frontend, a stateless FastAPI backend, and Gemma 4 as the sole reasoning engine. Each layer has a single, well-defined point of contact with the layer beneath it, which keeps responsibilities isolated and the system testable.
+Lexi follows a layered architecture designed to keep the interface, application logic, document processing and AI reasoning cleanly separated.
 ![](https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F22677985%2F4ef305011a3d4933a62eb534a011654c%2Flexi_architecture_flow.png?generation=1785059794732023&alt=media)
-The frontend consists of three parts: static Landing, About, and FAQ pages that carry no application logic; the Workspace, where the mode picker, level slider, before/after comparison, self-check flags, grounded chat, and study tools reside; and `lib/api.js`, the only module in the frontend aware that a backend exists at all. Every request the Workspace issues - upload, rewrite, verify, ask, export - passes through this single file as JSON over HTTP, so the backend endpoint can be changed by editing one constant (`VITE_API_BASE`) without touching the rest of the frontend.
 
-The backend is a stateless FastAPI service: no request depends on state retained from a previous one, which is what keeps the async pipeline safe to scale. Incoming requests are handled by route handlers, one per endpoint (`upload`, `process`, `verify`, `ask`, `key-points`, `glossary`, `flashcards`, `visualize`, `export`, `modes`), which delegate to a service layer (`rewrite`, `verify`, `qa`, `document_store`) scoped to the current session and backed by SQLite.
+Lexi separates into three layers: a React frontend, a stateless FastAPI backend, and Gemma 4 as the sole reasoning engine. Each layer has a single, well-defined point of contact with the layer beneath it, which keeps responsibilities isolated and the system testable.
 
-Every service that needs to reason over text does so through exactly one interface: `gemma_client.py`. No service calls Gemma directly; all ten AI features route through this single choke-point, which centralises retries, timeouts, and structured error handling. This is the architectural decision the rest of the backend is organised around, and it is what keeps behaviour under failure consistent across features and independently testable.
+The **React + Vite frontend** provides the user-facing Workspace, where rewriting, verification, grounded Q&A, study tools, visualization, and export are managed through a single API boundary (`lib/api.js`). This keeps the frontend independent of backend implementation details and allows the API endpoint to be changed through configuration rather than application code.
 
-The client calls Gemma 4 itself: `gemma-4-31b-it` handles reasoning and generation, while its audio-capable counterpart, `gemma-4-12b-it`, is used specifically for dictation. Responses travel back through the same path - client, service, route, `lib/api.js` - to the Workspace.
+The **FastAPI backend** handles document processing through focused route and service layers. Session-scoped documents are managed with SQLite, while all AI-powered operations are routed through a single `gemma_client.py` interface. This centralizes model communication, timeouts, retries, and error handling, making the AI pipeline consistent and independently testable.
 
-One further design decision is worth noting: the seven mode rule sets are defined once, in `prompts/rewrite_prompts.py`, and the frontend's mode list is served live from a `/modes` endpoint derived from those same keys rather than duplicated. This removes the possibility of frontend and backend drifting out of sync on what a "mode" is.
+At the model layer, **Gemma 4** powers document rewriting, verification, Q&A, and other reasoning tasks, while the audio-capable variant handles dictation. The seven accessibility modes are defined once in `rewrite_prompts.py` and exposed through `/modes`, giving the frontend and backend a single source of truth.
+
+**In short:**
+
+`React → API Boundary → FastAPI → Services → Gemma 4`
+
+with **SQLite for session-scoped document storage** and a centralized AI client for reliable model interaction.
 <details>
 <summary><strong>⚙️ Engineering decisions worth calling out</strong> (click to expand)</summary>
 <br/>
