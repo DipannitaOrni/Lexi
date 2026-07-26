@@ -62,7 +62,7 @@ A very large number of people do not read that way and the cost of ignoring them
 
  🌀 Someone with **ADHD**, who has reopened the same paragraph six times because it is an unbroken wall of text.
 
- 🔊 A **screen-reader user**, handed a document whose structure exists only visually — no real headings — so it reads as a flat, shapeless stream by ear.
+ 🔊 A **screen-reader user**, handed a document whose structure exists only visually no real headings so it reads as a flat, shapeless stream by ear.
 
  🌍 A **non-native reader**, blocked not by the concepts, but by idiom, register and jargon.
 
@@ -91,19 +91,19 @@ Not the same output relabelled. Seven modes, each restructuring text along diffe
 <td width="50%" valign="top">
 
 ### 2 · A duty to say "I'm not sure"
-Every rewrite is checked by a second pass that compares it against the original and flags where meaning may have drifted — with a confidence score and both versions shown.
+Every rewrite is checked by a second pass that compares it against the original and flags where meaning may have drifted with a confidence score and both versions shown.
 
 </td>
 </tr>
 </table>
 
-The result is a reading tool that is willing to look *less* impressive — flagging its own uncertainty instead of projecting false confidence — because for the people it serves, that trade is the entire point.
+The result is a reading tool that is willing to look *less* impressive flagging its own uncertainty instead of projecting false confidence because for the people it serves, that trade is the entire point.
 
 ---
 
 ## What makes it different
 
-### 1 · Seven genuinely different rewrites — not one, relabelled
+### 1 · Seven genuinely different rewrites not one, relabelled
 
 The same paragraph comes out meaningfully different depending on who is reading it. This is the core thesis, and it is enforced by seven distinct rule sets, not seven tone presets.
 
@@ -116,11 +116,17 @@ The same paragraph comes out meaningfully different depending on who is reading 
     <td align="center">🔊<br><strong>03</strong><br>Screen Reader</td>
     <td align="center">🌍<br><strong>04</strong><br>Non-Native English</td>
   </tr>
+
   <tr>
-    <td align="center">📋<br><strong>05</strong><br>Civic / Forms</td>
-    <td align="center">🔢<br><strong>06</strong><br>Dyscalculia</td>
-    <td align="center">⚡<br><strong>07</strong><br>ADHD-Friendly</td>
-    <td></td>
+    <td colspan="4" align="center">
+      <table align="center">
+        <tr>
+          <td align="center">📋<br><strong>05</strong><br>Civic / Forms</td>
+          <td align="center">🔢<br><strong>06</strong><br>Dyscalculia</td>
+          <td align="center">⚡<br><strong>07</strong><br>ADHD-Friendly</td>
+        </tr>
+      </table>
+    </td>
   </tr>
 </table>
 
