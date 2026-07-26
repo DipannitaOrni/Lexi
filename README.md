@@ -2,9 +2,9 @@
 
 # 📖 Lexi
 
-### Text that adapts to *how you read* — not the other way around.
+### Text that adapts to *how you read* not the other way around.
 
-**Every document assumes one kind of reader. Lexi rewrites it for the rest of us, and checks its own work before it hands anything back.**
+**Every document assumes one kind of reader. Lexi rewrites it for the rest of us and checks its own work before it hands anything back.**
 
 <p align="center">
   <img width="1548" height="791" alt="Lexi workspace" src="https://github.com/user-attachments/assets/b96effd3-1f1c-47c8-9551-58c986a98ec7" />
@@ -20,8 +20,6 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tests-31%2F31_passing-brightgreen?style=flat-square" alt="tests"/>
-  <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="license"/>
   <img src="https://img.shields.io/badge/languages-English_%7C_বাংলা-critical?style=flat-square" alt="languages"/>
   <img src="https://img.shields.io/badge/modes-7-informational?style=flat-square" alt="modes"/>
   <img src="https://img.shields.io/badge/status-hackathon_build-orange?style=flat-square" alt="status"/>
@@ -29,8 +27,6 @@
 
 <p align="center">
   <a href="YOUR_VIDEO_LINK_HERE"><strong>▶ Watch the 3-minute demo</strong></a>
-  &nbsp;·&nbsp;
-  <a href="YOUR_LIVE_DEMO_LINK_HERE"><strong>🔗 Try it live</strong></a>
 </p>
 
 <p align="center">
@@ -58,25 +54,25 @@
 
 ## The problem
 
-Almost everything written down assumes the same reader: someone who can hold a long sentence in working memory, decode unfamiliar words on the fly, and follow structure that exists only visually on the page.
+Almost everything written down assumes the same reader: someone who can hold a long sentence in working memory, decode unfamiliar words on the fly and follow structure that exists only visually on the page.
 
-A very large number of people do not read that way, and the cost of ignoring them is not abstract.
+A very large number of people do not read that way and the cost of ignoring them is not abstract.
 
-> 🧩 A student with **dyslexia**, facing forty pages of assigned reading, where every long sentence destabilises comprehension.
->
-> 🌀 Someone with **ADHD**, who has reopened the same paragraph six times because it is an unbroken wall of text.
->
-> 🔊 A **screen-reader user**, handed a document whose structure exists only visually — no real headings — so it reads as a flat, shapeless stream by ear.
->
-> 🌍 A **non-native reader**, blocked not by the concepts, but by idiom, register, and jargon.
->
-> 📋 Anyone standing in front of a **government form**, where a single misread line costs them a benefit they are owed.
+ 🧩 A student with **dyslexia**, facing forty pages of assigned reading where every long sentence destabilises comprehension.
+
+ 🌀 Someone with **ADHD**, who has reopened the same paragraph six times because it is an unbroken wall of text.
+
+ 🔊 A **screen-reader user**, handed a document whose structure exists only visually — no real headings — so it reads as a flat, shapeless stream by ear.
+
+ 🌍 A **non-native reader**, blocked not by the concepts, but by idiom, register and jargon.
+
+ 📋 Anyone standing in front of a **government form**, where a single misread line costs them a benefit they are owed.
 
 The tools that exist treat all of this as one problem with one fix: a single **"Simplify"** button. But shortening sentences helps a dyslexic reader and does nothing for a screen-reader user who needs real headings. Chunking a wall of text helps someone with ADHD and is irrelevant to someone who simply needs the vocabulary translated.
 
 **One output cannot serve opposite needs.**
 
-And there is a second, quieter problem underneath the first. Simplification can silently change what a document *means* — and the people who most need simplified text are the least equipped to notice when it has gone wrong. A confidently mis-simplified medical instruction or legal notice is more dangerous than the original.
+And there is a second, quieter problem underneath the first. Simplification can silently change what a document *means* and the people who most need simplified text are the least equipped to notice when it has gone wrong. A confidently mis-simplified medical instruction or legal notice is more dangerous than the original.
 
 ---
 
@@ -135,7 +131,8 @@ After every rewrite, a **second Gemma pass** compares the new version against th
 For a birthday card, that is overkill. For a medical dosage, a legal notice, or a form that decides whether someone receives support, **a confidently wrong simplification is worse than none at all.** So Lexi tells you exactly where to look twice.
 
 <div align="center">
-  <img width="1355" height="805" alt="Lexi confidence panel" src="https://github.com/user-attachments/assets/e45b064f-52ba-4e06-a0ad-75e2bdd28388" />
+  <img width="936" height="805" alt="WhatsApp Image 2026-07-25 at 9 41 35 PM" src="https://github.com/user-attachments/assets/10aafb65-d79f-462a-a652-dbdeabd3c65f" />
+
   <br/><em>Lexi shows exactly where it wasn't certain — original and rewritten wording side by side.</em>
 </div>
 
@@ -166,7 +163,7 @@ Lexi never silently hides a low-confidence result — the worst outcome for a re
 
 </details>
 
-### 3 · Answers grounded in *your* document — or an honest "I don't know"
+### 3 · Answers grounded in *your* document or an honest "I don't know"
 
 Ask a question and the answer is drawn from your document, with the supporting line quoted back. If the answer isn't in the text, Lexi says so, rather than inventing one.
 
@@ -290,11 +287,11 @@ Once a document is loaded, every feature works from that same source:
 
 Lexi is built for people, in a place, with a language — not for a demo.
 
-**🇧🇩 It works in বাংলা, end to end.** The interface, the rewriting, and the grounded Q&A all operate in Bangla as well as English. For a reader in Bangladesh facing an English-heavy government form, or a Bangla document written in dense officialese, this is the difference between understanding a document and guessing at it. PDF export embeds Unicode fonts so Bangla survives the round-trip intact — a detail most tools quietly get wrong.
+**🇧🇩 It works in বাংলা, end to end.** The interface, the rewriting, and the grounded Q&A all operate in Bangla as well as English. For a reader in Bangladesh facing an English-heavy government form, or a Bangla document written in dense officialese, this is the difference between understanding a document and guessing at it. PDF export embeds Unicode fonts so Bangla survives the round-trip intact a detail most tools quietly get wrong.
 
-**♿ The interface is itself an accessibility surface**, not a wrapper around one. Adjustable text size, relaxed line spacing, dark mode, full keyboard navigation, and screen-reader labelling throughout. Body text is set in **Lexend**, a typeface independently designed to improve reading proficiency.
+**♿ The interface is itself an accessibility surface**, not a wrapper around one. Adjustable text size, relaxed line spacing, dark mode, full keyboard navigation and screen-reader labelling throughout. Body text is set in **Lexend**, a typeface independently designed to improve reading proficiency.
 
-**🔒 Nothing is stored and nothing trains a model.** Documents live only for the length of a session and are never persisted or reused — because the people most likely to paste in a medical letter or a legal notice are exactly the people who most need that guarantee.
+**🔒 Nothing is stored and nothing trains a model.** Documents live only for the length of a session and are never persisted or reused because the people most likely to paste in a medical letter or a legal notice are exactly the people who most need that guarantee.
 
 The through-line: the readers Lexi is built for are usually an afterthought. Here they are the entire specification.
 
@@ -317,10 +314,10 @@ Nothing in Lexi works by keyword matching or hand-written rules. Every capabilit
 
 ## Tech stack
 
-Every choice below was made for a reason — not pulled in by default.
+Every choice below was made for a reason not pulled in by default.
 
 <details open>
-<summary><strong>🐍 Backend — a stateless reasoning core</strong></summary>
+<summary><strong>🐍 Backend - a stateless reasoning core</strong></summary>
 <br/>
 
 | Layer | Choice | Why |
@@ -358,8 +355,6 @@ Every choice below was made for a reason — not pulled in by default.
 
 Being upfront about the edges of the system, rather than papering over them:
 
-- 🖨️ **OCR requires a system-level Tesseract install**, separate from the Python package — without it, scanned or broken-encoding pages are explicitly flagged rather than silently producing garbage output.
-- 🇧🇩 **Bangla PDF extraction depends on the source font.** Many real-world Bangla PDFs are authored in legacy, non-Unicode fonts; Lexi detects this and OCR-rescues the page, but this requires Tesseract's Bengali language pack (`tesseract-ocr-ben`) installed alongside the base OCR engine.
 - 📊 **Diagram generation is intentionally conservative.** If a document's content doesn't genuinely suit a flowchart or chart, Lexi says so rather than forcing a visualization onto unsuitable text.
 - ✅ **Verification is an audit, not a guarantee.** The confidence score reflects how well Gemma's own comparison pass caught drift — it materially reduces (but does not eliminate) the risk of a silently wrong simplification, which is why both versions are always shown, not just the rewrite.
 - 🔒 **No persistent user accounts.** By design — session-scoped storage is a privacy choice, not a missing feature (see [Real-world impact](#real-world-impact)).
@@ -465,14 +460,6 @@ Because the needs are genuinely different, not just different intensities of the
 <br/>
 End to end — rewriting, grounded Q&A, and PDF export (with embedded Unicode fonts so the text survives the round-trip) all work in Bangla, not just the UI chrome.
 </details>
-
----
-
-## License
-
-MIT License — see [`LICENSE`](LICENSE) for details.
-
-Built for [Hackathon Name] 2026.
 
 ---
 
