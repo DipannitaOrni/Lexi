@@ -130,7 +130,7 @@ The same paragraph comes out meaningfully different depending on who is reading 
   </tr>
 </table>
 
-## 2 · It checks its own work
+### 2 · It checks its own work
 
 Most document AI systems follow a simple pattern: **read → rewrite → return**.
 
