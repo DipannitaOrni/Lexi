@@ -130,19 +130,20 @@ The same paragraph comes out meaningfully different depending on who is reading 
   </tr>
 </table>
 
-### 2 · It checks its own work
+## 2 · It checks its own work
 
-After every rewrite, a **second Gemma pass** compares the new version against the original and flags any passage where the meaning may have drifted — showing both excerpts side by side, with a confidence score.
+Most document AI systems follow a simple pattern: **read → rewrite → return**.
 
-For a birthday card, that is overkill. For a medical dosage, a legal notice, or a form that decides whether someone receives support, **a confidently wrong simplification is worse than none at all.** So Lexi tells you exactly where to look twice.
+Lexi takes a different approach: **rewrite → verify → surface uncertainty**.
 
-<div align="center">
-  <img width="936" height="805" alt="WhatsApp Image 2026-07-25 at 9 41 35 PM" src="https://github.com/user-attachments/assets/10aafb65-d79f-462a-a652-dbdeabd3c65f" />
+After every rewrite, a **second Gemma pass** independently compares the rewritten text against the original source. It looks for potential semantic drift changes in facts, numbers, conditions, negations, requirements or other details that could alter the original meaning. When a potential mismatch is detected, Lexi shows the **original and rewritten passages side by side**, together with a **confidence score**, so the user knows exactly where a second look is warranted.
 
-  <br/><em>Lexi shows exactly where it wasn't certain — original and rewritten wording side by side.</em>
-</div>
+> **Rewrite is not the finish line. Verification is part of the rewrite.**
 
-<br/>
+For a birthday card, this level of checking would be unnecessary. But for a **medical instruction, legal notice, government form or document that affects access to support**, a fluent but incorrect simplification can be more harmful than leaving the original untouched.
+
+That's what makes Lexi different: **it doesn't just make complex text easier to read, it makes the risks of that transformation visible.**
+
 
 <details>
 <summary><strong>🔍 What happens when confidence is low, specifically (click to expand)</strong></summary>
@@ -165,7 +166,7 @@ flowchart LR
     style F fill:#F7EEDF,stroke:#B85C38,color:#221C18
 ```
 
-Lexi never silently hides a low-confidence result — the worst outcome for a reader who already struggles to catch errors is a wrong answer delivered with false confidence.
+Lexi never silently hides a low-confidence result the worst outcome for a reader who already struggles to catch errors is a wrong answer delivered with false confidence.
 
 </details>
 
@@ -178,8 +179,8 @@ Ask a question and the answer is drawn from your document, with the supporting l
 ## How it works
 
 <div align="center">
-  <img src="docs/screenshots/workspace.png" alt="Lexi rewriting a document in the split workspace" width="880" />
-  <br/><em>A dense form, rewritten for dyslexia — original on the left, rewrite on the right, readability deltas above.</em>
+  <img width="936" height="805" alt="WhatsApp Image 2026-07-25 at 9 41 35 PM" src="https://github.com/user-attachments/assets/10aafb65-d79f-462a-a652-dbdeabd3c65f" />
+  <br/><em>A dense form, rewritten original on the left, rewrite on the right, readability deltas above.</em>
 </div>
 
 <br/>
