@@ -207,39 +207,17 @@ Everything downstream - grounded Q&A, key points, glossary, flashcards and diagr
 
 ## Architecture
 
-A clean split: a **stateless FastAPI reasoning core** and a **provider-isolated React client**. Every AI capability is one HTTP call away, and the frontend never knows or cares which model sits behind the API.
+Lexi separates into three layers: a React frontend, a stateless FastAPI backend, and Gemma 4 as the sole reasoning engine. Each layer has a single, well-defined point of contact with the layer beneath it, which keeps responsibilities isolated and the system testable.
+![](https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F22677985%2F4ef305011a3d4933a62eb534a011654c%2Flexi_architecture_flow.png?generation=1785059794732023&alt=media)
+The frontend consists of three parts: static Landing, About, and FAQ pages that carry no application logic; the Workspace, where the mode picker, level slider, before/after comparison, self-check flags, grounded chat, and study tools reside; and `lib/api.js`, the only module in the frontend aware that a backend exists at all. Every request the Workspace issues - upload, rewrite, verify, ask, export - passes through this single file as JSON over HTTP, so the backend endpoint can be changed by editing one constant (`VITE_API_BASE`) without touching the rest of the frontend.
 
-```mermaid
-flowchart TB
-    subgraph FE["React · Vite"]
-        direction TB
-        Pages["Landing · About · FAQ"]
-        Work["Workspace<br/>7 modes · level slider · before/after<br/>self-check flags · grounded chat · study tools"]
-        API["lib/api.js<br/><i>the only file that knows a backend exists</i>"]
-        Pages --- Work --- API
-    end
+The backend is a stateless FastAPI service: no request depends on state retained from a previous one, which is what keeps the async pipeline safe to scale. Incoming requests are handled by route handlers, one per endpoint (`upload`, `process`, `verify`, `ask`, `key-points`, `glossary`, `flashcards`, `visualize`, `export`, `modes`), which delegate to a service layer (`rewrite`, `verify`, `qa`, `document_store`) scoped to the current session and backed by SQLite.
 
-    subgraph BE["FastAPI · Python"]
-        direction TB
-        Routes["Routes<br/>upload · process · verify · ask · key-points<br/>glossary · flashcards · visualize · export · modes"]
-        Client["<b>gemma_client.py</b><br/>single choke-point for every model call<br/>retries · timeouts · structured errors"]
-        Store["rewrite · verify · qa · document_store (SQLite)"]
-        Prompts["prompts/ — mode rules defined ONCE<br/>frontend mode list is derived from here"]
-        Routes --- Client --- Store --- Prompts
-    end
+Every service that needs to reason over text does so through exactly one interface: `gemma_client.py`. No service calls Gemma directly; all ten AI features route through this single choke-point, which centralises retries, timeouts, and structured error handling. This is the architectural decision the rest of the backend is organised around, and it is what keeps behaviour under failure consistent across features and independently testable.
 
-    Gemma["<b>Gemma 4</b><br/>gemma-4-31b-it — all reasoning &amp; generation<br/>gemma-4-12b-it — audio-in (dictation)"]
+The client calls Gemma 4 itself: `gemma-4-31b-it` handles reasoning and generation, while its audio-capable counterpart, `gemma-4-12b-it`, is used specifically for dictation. Responses travel back through the same path - client, service, route, `lib/api.js` - to the Workspace.
 
-    API -->|JSON over HTTP| Routes
-    Client --> Gemma
-
-    style FE fill:#F2E9EF,stroke:#5A3A52,color:#221C18
-    style BE fill:#F7EEDF,stroke:#B85C38,color:#221C18
-    style Gemma fill:#EAF0E7,stroke:#5B7355,color:#221C18
-    style Client fill:#fff,stroke:#B85C38,stroke-width:2px,color:#221C18
-    style API fill:#fff,stroke:#5A3A52,stroke-width:2px,color:#221C18
-```
-
+One further design decision is worth noting: the seven mode rule sets are defined once, in `prompts/rewrite_prompts.py`, and the frontend's mode list is served live from a `/modes` endpoint derived from those same keys rather than duplicated. This removes the possibility of frontend and backend drifting out of sync on what a "mode" is.
 <details>
 <summary><strong>⚙️ Engineering decisions worth calling out</strong> (click to expand)</summary>
 <br/>
