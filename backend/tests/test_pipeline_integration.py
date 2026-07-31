@@ -69,7 +69,7 @@ def test_modes_endpoint_lists_seven_modes():
     assert resp.status_code == 200
     modes = resp.json()["modes"]
     mode_ids = {m["id"] for m in modes}
-    assert mode_ids == {"dyslexia", "focus", "screen_reader", "non_native", "civic", "dyscalculia", "low_vision"}
+    assert mode_ids == {"dyslexia", "focus", "screen_reader", "non_native", "civic", "dyscalculia", "adhd"}
 
 
 @pytest.mark.asyncio

@@ -22,6 +22,8 @@ class Settings(BaseSettings):
     # fall back to Gemini (not Gemma) models on the same API/key. Flagged
     # clearly here and in the migration notes.
     gemma_embedding_model: str = "gemini-embedding-001"
+    gemma_tts_model: str = "gemini-2.5-flash-preview-tts"
+    gemma_tts_voice: str = "Kore"
     llm_timeout_seconds: float = 30.0
     llm_max_retries: int = 3
 

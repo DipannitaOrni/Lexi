@@ -12,7 +12,7 @@ from fastapi.responses import JSONResponse
 
 from app.api import (
     ask, audio, export, flashcards, glossary, health, key_points,
-    modes, process, rewrite, session, upload, verify, visualize,
+    modes, process, rewrite, session, tts, upload, verify, visualize,
 )
 from app.config import get_settings
 from app.utils.logging_config import configure_logging, get_logger
@@ -80,6 +80,7 @@ app.include_router(key_points.router, tags=["key_points"])
 app.include_router(glossary.router, tags=["glossary"])
 app.include_router(visualize.router, tags=["visualize"])
 app.include_router(audio.router, tags=["audio"])
+app.include_router(tts.router, tags=["tts"])
 app.include_router(session.router, tags=["session"])
 app.include_router(export.router, tags=["export"])
 app.include_router(modes.router, tags=["modes"])

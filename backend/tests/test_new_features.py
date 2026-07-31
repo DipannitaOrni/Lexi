@@ -24,7 +24,7 @@ def test_modes_includes_new_modes():
     resp = client.get("/modes")
     mode_ids = {m["id"] for m in resp.json()["modes"]}
     assert "dyscalculia" in mode_ids
-    assert "low_vision" in mode_ids
+    assert "adhd" in mode_ids
 
 
 @pytest.mark.asyncio

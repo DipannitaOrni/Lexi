@@ -12,7 +12,7 @@ from fpdf import FPDF
 
 from app.schemas.export_schema import ExportRequest
 from app.services.document_store import document_store
-from app.services.gemma_client import LLMAPIError, LLMTimeoutError
+from app.services.gemma_client import LLMAPIError, LLMTimeoutError, synthesize_speech
 from app.services.rewrite_service import rewrite_document, rewritten_chunks_to_full_text
 from app.utils.logging_config import get_logger, log_event
 
@@ -91,6 +91,14 @@ async def export(body: ExportRequest):
             media_type="application/pdf",
             headers={"Content-Disposition": f'attachment; filename="{filename_base}.pdf"'},
         )
+
+    try:
+        audio_bytes = await synthesize_speech(rewritten_text)
+    except LLMTimeoutError:
+        raise HTTPException(status_code=504, detail={"error": {"code": "llm_timeout", "message": "Speech synthesis timed out."}})
+    except LLMAPIError as exc:
+        log_event(logger, "export_tts_failed", level="error", error=str(exc))
+        raise HTTPException(status_code=502, detail={"error": {"code": "llm_api_error", "message": "Speech synthesis failed."}})
 
     return StreamingResponse(
         io.BytesIO(audio_bytes),

@@ -3,7 +3,7 @@ from typing import List, Literal, Optional
 from pydantic import BaseModel, Field
 
 AccessibilityMode = Literal[
-    "dyslexia", "focus", "screen_reader", "non_native", "civic", "dyscalculia", "low_vision"
+    "dyslexia", "focus", "screen_reader", "non_native", "civic", "dyscalculia", "adhd"
 ]
 
 

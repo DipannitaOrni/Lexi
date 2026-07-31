@@ -87,7 +87,7 @@ export const STRINGS = {
       non_native: 'Non-Native English',
       civic: 'Civic / Forms',
       dyscalculia: 'Dyscalculia',
-      low_vision: 'Low Vision',
+      adhd: 'ADHD-Friendly',
     },
     modeDescs: {
       dyslexia: 'Short sentences, simple words, clear spacing.',
@@ -96,7 +96,7 @@ export const STRINGS = {
       non_native: 'Simpler vocabulary with inline clarifications.',
       civic: 'Requirements, deadlines, fees, and steps.',
       dyscalculia: 'Numbers and tables in plain language.',
-      low_vision: 'Short scannable paragraphs, lists over tables.',
+      adhd: 'Short chunks, key action first, bolded essentials.',
     },
   },
 
@@ -188,7 +188,7 @@ export const STRINGS = {
       non_native: 'সহজ ইংরেজি',
       civic: 'সরকারি ফর্ম',
       dyscalculia: 'ডিসক্যালকুলিয়া',
-      low_vision: 'ক্ষীণ দৃষ্টি',
+      adhd: 'ADHD-বান্ধব',
     },
     modeDescs: {
       dyslexia: 'ছোট বাক্য, সহজ শব্দ, পরিষ্কার ফাঁক।',
@@ -197,7 +197,7 @@ export const STRINGS = {
       non_native: 'সহজ শব্দভাণ্ডার, প্রয়োজনে ব্যাখ্যা সহ।',
       civic: 'প্রয়োজনীয় কাগজ, সময়সীমা, ফি ও ধাপ।',
       dyscalculia: 'সংখ্যা ও টেবিল সহজ ভাষায়।',
-      low_vision: 'ছোট অনুচ্ছেদ, টেবিলের বদলে তালিকা।',
+      adhd: 'ছোট অংশে ভাগ, জরুরি কাজ আগে, বোল্ড করা মূল বিষয়।',
     },
   },
 }

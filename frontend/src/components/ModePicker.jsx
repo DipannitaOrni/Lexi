@@ -5,7 +5,7 @@ const FALLBACK = [
   { id: 'non_native', label: 'Non-Native English', description: 'Simpler vocabulary with inline clarifications.' },
   { id: 'civic', label: 'Civic / Forms', description: 'Requirements, deadlines, fees, and steps.' },
   { id: 'dyscalculia', label: 'Dyscalculia', description: 'Numbers and tables in plain language.' },
-  { id: 'low_vision', label: 'Low Vision', description: 'Short scannable paragraphs, lists over tables.' },
+  { id: 'adhd', label: 'ADHD-Friendly', description: 'Short chunks, key action first, bolded essentials.' },
 ]
 
 const GLYPH = {
@@ -48,10 +48,10 @@ const GLYPH = {
       <rect x="16" y="4" width="4" height="17" rx="1.4" fill="currentColor" />
     </svg>
   ),
-  low_vision: (
+  adhd: (
     <svg viewBox="0 0 24 24" fill="none">
-      <path d="M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12z" stroke="currentColor" strokeWidth="2" />
-      <circle cx="12" cy="12" r="3" fill="currentColor" />
+      <path d="M4 6h2.4M4 12h2.4M4 18h2.4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M9.5 6h10.5M9.5 12h10.5M9.5 18h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity=".6" />
     </svg>
   ),
 }

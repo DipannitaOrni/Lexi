@@ -18,7 +18,7 @@ _MODE_LABELS = {
     "non_native": ("Non-Native English", "Simplified vocabulary with inline clarifications."),
     "civic": ("Civic / Government Forms", "Clear requirements, deadlines, fees, and steps."),
     "dyscalculia": ("Dyscalculia-Friendly", "Tables and statistics explained in plain language."),
-    "low_vision": ("Low Vision", "Short scannable paragraphs, lists instead of tables."),
+    "adhd": ("ADHD-Friendly", "Short chunks, key action first, bolded essentials."),
 }
 
 

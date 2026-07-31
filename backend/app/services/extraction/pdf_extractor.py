@@ -8,8 +8,9 @@ Secondary/fallback: pdfplumber — used per-page when PyMuPDF's output for
 that page looks garbled or unusually sparse relative to the page's visible
 content (better at column/table layouts in some documents).
 
-OCR: attempted via pytesseract IF available. If unavailable, scanned pages
-are explicitly flagged rather than silently dropped or faked.
+Scanned pages (little/no extractable text, but image content present) are
+explicitly flagged rather than silently dropped or faked — there is no OCR
+step here yet.
 """
 import io
 import re
@@ -26,14 +27,6 @@ try:
     import pdfplumber
 except ImportError:  # pragma: no cover
     pdfplumber = None
-
-try:
-    import pytesseract
-    from PIL import Image
-
-    OCR_AVAILABLE = True
-except ImportError:  # pragma: no cover
-    OCR_AVAILABLE = False
 
 
 _GARBLED_RATIO_THRESHOLD = 0.15  # fraction of non-printable/replacement chars
@@ -59,17 +52,6 @@ def _extract_with_pdfplumber_page(pdf_bytes: bytes, page_index: int) -> Optional
         return None
 
 
-def _ocr_page(page) -> Optional[str]:
-    if not OCR_AVAILABLE:
-        return None
-    try:
-        pix = page.get_pixmap(dpi=200)
-        img = Image.open(io.BytesIO(pix.tobytes("png")))
-        return pytesseract.image_to_string(img)
-    except Exception:
-        return None
-
-
 def extract_pdf(file_bytes: bytes) -> ExtractedDocument:
     if fitz is None:
         raise RuntimeError("PyMuPDF (fitz) is not installed")
@@ -89,17 +71,8 @@ def extract_pdf(file_bytes: bytes) -> ExtractedDocument:
             has_images = len(image_list) > 0
 
             if is_sparse_text and has_images:
-                ocr_text = _ocr_page(page)
-                if ocr_text and ocr_text.strip():
-                    text = ocr_text
-                else:
-                    warnings.append(
-                        PageWarning(
-                            page_number=page_index + 1,
-                            reason="scanned_no_ocr" if not OCR_AVAILABLE else "ocr_failed",
-                        )
-                    )
-                    text = ""  # never fabricate content for an unreadable page
+                warnings.append(PageWarning(page_number=page_index + 1, reason="scanned_no_ocr"))
+                text = ""  # never fabricate content for an unreadable page
 
             elif _looks_garbled(text):
                 fallback = _extract_with_pdfplumber_page(file_bytes, page_index)

@@ -53,12 +53,13 @@ MODE_RULES = {
         "number exactly as written, just explain what it means in words; avoid multi-column layouts "
         "in the rewritten text — describe one data point at a time, in order."
     ),
-    "low_vision": (
-        "Mode: low_vision. Rules: this content will be displayed in large print with high contrast, "
-        "so keep the TEXT STRUCTURE itself easy to scan at a glance: short paragraphs (2-3 sentences "
-        "max), one idea per paragraph, clear sequential headings before each section, and convert any "
-        "dense table into a simple line-by-line list ('Item: value') since tables are hard to scan "
-        "visually at large zoom levels; avoid side-by-side or multi-column concepts entirely."
+    "adhd": (
+        "Mode: adhd. Rules: break content into small chunks of 2-3 sentences with a clear blank line "
+        "between each; state the single most important action or takeaway as the very first line, "
+        "before any supporting detail; convert any sequence into a short numbered or bulleted list "
+        "rather than a flowing paragraph; bold the one or two words in each chunk that matter most "
+        "(a deadline, an amount, a required action) so a skimming reader can re-orient instantly; "
+        "avoid long build-ups — lead with the point, then explain."
     ),
 }
 
@@ -96,9 +97,12 @@ FEW_SHOT_EXAMPLES = {
         '"There were 120 people in Group A. Group B had 45 people. Group A had about 2.5 times as '
         'many people as Group B."'
     ),
-    "low_vision": (
-        'Example — Original: "Name: John | Age: 34 | Status: Approved" (table row) Rewritten: '
-        '"Name: John.\nAge: 34.\nStatus: Approved."'
+    "adhd": (
+        'Example — Original: "The library is open Monday through Friday from 9am to 6pm, and on '
+        'weekends visitors must reserve a study room online at least one day in advance since walk-in '
+        'access is not guaranteed during peak exam periods." Rewritten: "**Reserve your weekend spot a '
+        'day ahead.**\\n\\n- Mon-Fri: open 9am-6pm, walk in anytime\\n- Weekends: book a study room '
+        'online 1 day early\\n- No guaranteed walk-in seats during exams"'
     ),
 }
 

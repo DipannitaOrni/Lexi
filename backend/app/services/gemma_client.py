@@ -212,6 +212,68 @@ def _wav_to_mp3(wav_bytes: bytes) -> bytes:
         raise LLMAPIError("ffmpeg is not installed. Install it (e.g. `apt-get install ffmpeg`) to enable /tts.") from exc
 
 
+async def synthesize_speech(text: str, voice: Optional[str] = None, speed: float = 1.0) -> bytes:
+    """
+    Synthesizes `text` to speech and returns MP3 bytes.
+
+    LIMITATION: Gemma has no audio-output capability at all (it can listen,
+    not speak), so this calls Gemini's TTS model (gemini-2.5-flash-preview-tts
+    by default) on the same API/key instead — the other non-Gemma piece in
+    this file, alongside get_embedding().
+    """
+    settings = get_settings()
+    api_key = _require_key(settings)
+    voice_name = voice or settings.gemma_tts_voice
+    url = f"{settings.gemma_api_base}/models/{settings.gemma_tts_model}:generateContent"
+
+    prompt = text if speed == 1.0 else f"Say the following at a {speed}x pace: {text}"
+
+    last_error: Optional[Exception] = None
+    for attempt in range(1, settings.llm_max_retries + 1):
+        try:
+            async with httpx.AsyncClient(timeout=settings.llm_timeout_seconds) as client:
+                response = await client.post(
+                    url,
+                    headers=_headers(api_key),
+                    json={
+                        "contents": [{"parts": [{"text": prompt}]}],
+                        "generationConfig": {
+                            "responseModalities": ["AUDIO"],
+                            "speechConfig": {
+                                "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice_name}}
+                            },
+                        },
+                    },
+                )
+            if response.status_code == 429:
+                last_error = LLMAPIError("Gemma TTS rate limited", 429)
+                await asyncio.sleep(2 ** attempt)
+                continue
+            if response.status_code >= 500:
+                last_error = LLMAPIError(f"Gemma TTS server error: {response.status_code}", response.status_code)
+                await asyncio.sleep(2 ** (attempt - 1))
+                continue
+            if response.status_code >= 400:
+                raise LLMAPIError(f"Gemma TTS client error: {response.status_code} {response.text[:200]}", response.status_code)
+
+            data = response.json()
+            try:
+                inline = data["candidates"][0]["content"]["parts"][0]["inlineData"]
+                pcm_bytes = base64.b64decode(inline["data"])
+            except (KeyError, IndexError) as exc:
+                raise LLMAPIError("Gemma TTS response contained no audio") from exc
+
+            wav_bytes = _pcm_to_wav(pcm_bytes)
+            return _wav_to_mp3(wav_bytes)
+
+        except httpx.TimeoutException:
+            last_error = LLMTimeoutError("Gemma TTS timeout")
+            await asyncio.sleep(2 ** (attempt - 1))
+            continue
+
+    raise last_error or LLMAPIError("Gemma TTS call failed")
+
+
 async def transcribe_audio(file_bytes: bytes, filename: str) -> str:
     """
     Transcribes spoken audio to text using Gemma's native audio-input (ASR)
