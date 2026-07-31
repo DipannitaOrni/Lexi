@@ -26,7 +26,7 @@
 </p>
 
 <p align="center">
-  <a href="YOUR_VIDEO_LINK_HERE"><strong>▶ Watch the 3-minute demo</strong></a>
+  <a href="[YOUR_VIDEO_LINK_HERE](https://youtu.be/-Ct2shz7X4E?si=Ng3YkSlQotmFVZFz)"><strong>▶ Watch the 3-minute demo</strong></a>
 </p>
 
 <p align="center">
