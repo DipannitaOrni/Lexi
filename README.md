@@ -303,7 +303,7 @@ Nothing in Lexi works by keyword matching or hand-written rules. Every capabilit
 
 **Every generative call in Lexi runs on Gemma 4.** Rewriting, verification, grounded Q&A, glossary, flashcards, key points, and visualisation all of it. Dictation uses Gemma's audio-capable variant. Strip Gemma out and there is no fallback; there is nothing.
 
-> 💡 **One honest note on retrieval.** For grounded Q&A, Lexi ranks document chunks with a hosted embedding model, because Gemma exposes no embedding endpoint. Embeddings are **not generative**, they encode text as vectors so the right passage can be located *before* Gemma answers from it. Every piece of reasoning and every word of output remains Gemma's.
+> 💡 **One honest note on retrieval:**  for grounded Q&A, Lexi ranks document chunks with a hosted embedding model, since Gemma itself exposes no embedding endpoint. Embeddings only locate the right passage before Gemma answers from it every word of reasoning and every word of output is still Gemma's.
 
 ---
 
